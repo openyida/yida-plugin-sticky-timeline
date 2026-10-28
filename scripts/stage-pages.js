@@ -1,0 +1,12 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const { version } = require('../package.json');
+const root = path.resolve(__dirname, '..');
+const site = path.join(root, '.site');
+fs.mkdirSync(site, { recursive: true });
+fs.cpSync(path.join(root, 'dist/plugin'), path.join(site, version), { recursive: true });
+fs.copyFileSync(path.join(root, 'dist/demo/demo.js'), path.join(site, 'demo.js'));
+fs.copyFileSync(path.join(root, 'demo/index.html'), path.join(site, 'index.html'));
+fs.writeFileSync(path.join(site, '.nojekyll'), '');
+console.log(`Staged full plugin bundle at ${version}/remoteEntry.js`);

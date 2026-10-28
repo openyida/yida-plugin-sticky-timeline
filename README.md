@@ -37,7 +37,8 @@ YIDA_PLUGIN_ID=PLUGIN-实际编号 npm run build
 
 资源使用已有企业 HTTPS 静态服务器；集团环境优先内网发布渠道。
 没有企业渠道时，可用码云管理源码、阿里云 OSS 托管完整产物；GitHub Actions / Pages 为备选。
-本仓库没有自动部署流程，不会因推送而公开发布静态资源。
+本仓库的 Pages 部署仅通过手动 workflow_dispatch 触发，不会因推送自动部署。
+构建检查与部署分离；部署工作流构建整个插件目录到版本路径，再上传 Pages artifact。
 
 资源部署后，在 `frontEndDevInfo.cdnEntry` 填真实完整 HTTPS 地址；
 扩展点按平台 `plugin extensions` 回读配置为自定义页面领域。

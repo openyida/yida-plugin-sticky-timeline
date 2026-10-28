@@ -3,6 +3,7 @@ const React = require('react');
 const { createRoot } = require('react-dom/client');
 const { StickyTimeline } = require('../src/timeline');
 const { SAMPLE_ENTRIES } = require('../src/data');
+const { version } = require('../package.json');
 window.React = React;
 const params = new URLSearchParams(location.search);
 const nested = params.has('nested');
@@ -23,7 +24,7 @@ if (!params.has('federation')) {
     ComponentPropConfigBuilder: { UUID: () => ({ name: 'uuid' }), Style: () => ({ name: 'style' }) },
   };
   const script = document.createElement('script');
-  script.src = '/plugin/remoteEntry.js';
+  script.src = new URL(`./${version}/remoteEntry.js`, location.href).href;
   script.onerror = () => { root.textContent = 'Module Federation 入口加载失败'; };
   script.onload = async () => {
     try {

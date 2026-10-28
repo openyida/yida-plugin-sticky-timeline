@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "demo:build": "webpack --mode development --config webpack.demo.js",
+    "pages:build": "npm run build && npm run demo:build && node scripts/stage-pages.js",
     "test": "node --test tests/*.test.js",
     "preview": "node scripts/preview.js"
   },
