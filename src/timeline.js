@@ -37,6 +37,7 @@ function StickyTimeline(props) {
       const move = (label, boundary) => {
         if (!label) return;
         label.style.position = clipped ? 'relative' : '';
+        label.style.top = clipped ? '0px' : '';
         const rect = boundary.getBoundingClientRect();
         const padding = parseFloat(getComputedStyle(boundary).paddingBottom) || 0;
         const shift = stickyShift(rect.top, rect.height, label.getBoundingClientRect().height, padding, stickyTop);
@@ -60,7 +61,7 @@ function StickyTimeline(props) {
       window.removeEventListener('resize', schedule);
       if (observer) observer.disconnect();
       if (frame) cancelAnimationFrame(frame);
-      element.querySelectorAll('.tl-date,.tl-nav').forEach(label => { label.style.position = ''; label.style.transform = ''; });
+      element.querySelectorAll('.tl-date,.tl-nav').forEach(label => { label.style.position = ''; label.style.top = ''; label.style.transform = ''; });
       delete element.dataset.stickyFallback;
     };
   }, [normalized, offset]);
