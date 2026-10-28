@@ -67,7 +67,7 @@ YIDA_PLUGIN_ID=PLUGIN-实际编号 npm run build
 `entries` 每项支持 `version`、`date`、`title`、`highlights: string[]`、
 `sections: {tag, title, items: string[]}[]`。tag 支持 new/update/fix/remove/test。
 内容按纯文本渲染，不执行 HTML、Markdown 或脚本。传入空数组显示空态；非法 JSON 显示错误提示。
-样例位于 `src/data.js`。日期吸顶相对最近滚动容器；宿主祖先的 overflow 布局会影响 CSS sticky，需在真实页面验收。
+样例位于 `src/data.js`。日期吸顶相对最近滚动容器；遇到中间 overflow:hidden 祖先时，组件内部按滚动位置移动日期与目录，保留条目边界，不修改宿主样式。
 
 ## 验证记录
 
