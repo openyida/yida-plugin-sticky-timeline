@@ -1,6 +1,6 @@
 'use strict';
 const React = require('react');
-const { normalizeEntries, offsetValue, SAMPLE_ENTRIES } = require('./data');
+const { normalizeEntries, offsetValue, stickyShift, SAMPLE_ENTRIES } = require('./data');
 const css = require('./styles');
 const h = React.createElement;
 const TAGS = { new: '新增', update: '优化', fix: '修复', remove: '移除', test: '测试' };
@@ -24,8 +24,27 @@ function StickyTimeline(props) {
       if (!nodes.length) return;
       // Find the actual scrolling ancestor, including nested custom-page hosts.
       let ancestor = element.parentElement;
-      while (ancestor && !/(auto|scroll|overlay)/.test(getComputedStyle(ancestor).overflowY)) ancestor = ancestor.parentElement;
-      const threshold = (ancestor ? Math.max(0, ancestor.getBoundingClientRect().top + ancestor.clientTop) : 0) + offset + 8;
+      let clipped = false;
+      while (ancestor) {
+        const overflow = getComputedStyle(ancestor).overflowY;
+        if (/(auto|scroll|overlay)/.test(overflow)) break;
+        if (overflow === 'hidden') clipped = true;
+        ancestor = ancestor.parentElement;
+      }
+      const stickyTop = (ancestor ? Math.max(0, ancestor.getBoundingClientRect().top + ancestor.clientTop) : 0) + offset;
+      const threshold = stickyTop + 8;
+      // Hidden host wrappers capture CSS sticky. Move only our labels, within their own sections.
+      const move = (label, boundary) => {
+        if (!label) return;
+        label.style.position = clipped ? 'relative' : '';
+        const rect = boundary.getBoundingClientRect();
+        const padding = parseFloat(getComputedStyle(boundary).paddingBottom) || 0;
+        const shift = stickyShift(rect.top, rect.height, label.getBoundingClientRect().height, padding, stickyTop);
+        label.style.transform = clipped ? `translateY(${shift}px)` : '';
+      };
+      nodes.forEach(node => move(node.querySelector('.tl-date'), node));
+      move(element.querySelector('.tl-nav'), element.querySelector('.tl-layout'));
+      element.dataset.stickyFallback = String(clipped);
       let next = 0;
       nodes.forEach((node, index) => { if (node.getBoundingClientRect().top <= threshold) next = index; });
       setActive(next);
@@ -41,6 +60,8 @@ function StickyTimeline(props) {
       window.removeEventListener('resize', schedule);
       if (observer) observer.disconnect();
       if (frame) cancelAnimationFrame(frame);
+      element.querySelectorAll('.tl-date,.tl-nav').forEach(label => { label.style.position = ''; label.style.transform = ''; });
+      delete element.dataset.stickyFallback;
     };
   }, [normalized, offset]);
 

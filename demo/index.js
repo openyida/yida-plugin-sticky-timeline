@@ -9,10 +9,12 @@ const params = new URLSearchParams(location.search);
 const nested = params.has('nested');
 const root = document.getElementById('root');
 root.style.cssText = `max-width:${params.get('width') === 'narrow' ? '390px' : '1160px'};margin:32px auto;background:white;${nested ? 'height:600px;overflow:auto;' : ''}`;
+const mount = params.has('clipped') ? root.appendChild(document.createElement('div')) : root;
+if (mount !== root) mount.style.overflow = 'hidden';
 const props = { theme: params.get('theme') || 'light', stickyOffset: 24 };
 const children = [React.createElement(StickyTimeline, { key: 1, ...props })];
 if (params.has('multiple')) children.push(React.createElement(StickyTimeline, { key: 2, ...props, title: '第二条独立时间线', entries: SAMPLE_ENTRIES.slice(1) }));
-const renderer = createRoot(root);
+const renderer = createRoot(mount);
 if (!params.has('federation')) {
   renderer.render(React.createElement(React.Fragment, null, children));
 } else {

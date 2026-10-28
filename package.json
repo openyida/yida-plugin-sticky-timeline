@@ -1,6 +1,6 @@
 {
   "name": "yida-plugin-sticky-timeline",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "description": "宜搭自定义页面吸顶时间线插件",
   "scripts": {

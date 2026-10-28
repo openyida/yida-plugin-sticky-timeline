@@ -41,4 +41,8 @@ function offsetValue(value) {
   return Number.isFinite(number) ? Math.min(600, Math.max(0, number)) : 24;
 }
 
-module.exports = { SAMPLE_ENTRIES, normalizeEntries, offsetValue };
+function stickyShift(start, height, labelHeight, padding, target) {
+  return Math.max(0, Math.min(target - start, height - labelHeight - padding));
+}
+
+module.exports = { SAMPLE_ENTRIES, normalizeEntries, offsetValue, stickyShift };
