@@ -42,6 +42,12 @@ YIDA_PLUGIN_ID=PLUGIN-实际编号 npm run build
 
 资源部署后，在 `frontEndDevInfo.cdnEntry` 填真实完整 HTTPS 地址；
 扩展点按平台 `plugin extensions` 回读配置为自定义页面领域。
+设计态配置 `yida.designer.custom-page.component`；运行态配置为：
+
+```json
+{"extensionId":"yida.app.custom-page.component","config":{"componentNameList":["OpenYidaStickyTimeline"]}}
+```
+
 先 `version-get`，保留后端和参数配置，再 `save-dev` 带 `--expected-hash` 和独立备份保存。
 组织内发布、安装测试使用官方编辑器；协议由用户本人确认。
 如缺插件开发权益，打开 [宜搭开放－插件需求共创](https://ding.aliwork.com/o/Plug-in) 申请。

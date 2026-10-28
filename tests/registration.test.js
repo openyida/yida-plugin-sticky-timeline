@@ -17,6 +17,7 @@ test('设计器和运行时只注册自定义页面组件，配置与插入片�
     require('../src/designer-custom-page').run();
     assert.equal(registry.app.componentName, 'OpenYidaStickyTimeline');
     assert.equal(registry.app.view, registry.designer.designerView);
+    assert.equal(registry.app.view.displayName, 'OpenYidaStickyTimeline');
     assert.equal(registry.app.mobileView, registry.app.view);
     const props = registry.designer.snippets[0].schema.props;
     assert.ok(registry.designer.configure.some(item => item.name === 'entries' && item.supportVariable));

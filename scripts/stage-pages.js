@@ -5,6 +5,8 @@ const { version } = require('../package.json');
 const root = path.resolve(__dirname, '..');
 const site = path.join(root, '.site');
 fs.mkdirSync(site, { recursive: true });
+const releases = path.join(root, 'releases');
+if (fs.existsSync(releases)) fs.cpSync(releases, site, { recursive: true });
 fs.cpSync(path.join(root, 'dist/plugin'), path.join(site, version), { recursive: true });
 fs.copyFileSync(path.join(root, 'dist/demo/demo.js'), path.join(site, 'demo.js'));
 fs.copyFileSync(path.join(root, 'demo/index.html'), path.join(site, 'index.html'));

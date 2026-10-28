@@ -80,4 +80,5 @@ function StickyTimeline(props) {
     h('div', { className: 'tl-layout' }, h('div', { className: 'tl-entries' }, articles), navigation)));
 }
 
+StickyTimeline.displayName = 'OpenYidaStickyTimeline';
 module.exports = { StickyTimeline };

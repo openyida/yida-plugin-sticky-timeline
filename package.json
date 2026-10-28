@@ -1,11 +1,11 @@
 {
   "name": "yida-plugin-sticky-timeline",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "private": true,
   "description": "宜搭自定义页面吸顶时间线插件",
   "scripts": {
     "build": "webpack --mode production",
-    "demo:build": "webpack --mode development --config webpack.demo.js",
+    "demo:build": "webpack --mode production --config webpack.demo.js",
     "pages:build": "npm run build && npm run demo:build && node scripts/stage-pages.js",
     "test": "node --test tests/*.test.js",
     "preview": "node scripts/preview.js"
