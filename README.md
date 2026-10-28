@@ -21,6 +21,9 @@ npm run preview
 
 先用目标分支 CLI 在测试组织创建独立插件并回读真实 ID：
 
+本例验证 OpenYida 的插件功能分支。先 link 含 `plugin create --type other` 的源码版本，
+核对 `openyida` 真实路径；已发布的旧版 CLI 未必支持该参数。
+
 ```sh
 openyida login --check-only --json
 openyida plugin extensions --json
